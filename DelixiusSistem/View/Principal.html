@@ -1,0 +1,142 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante</title>
+</head>
+<style>
+    body {
+    background-color: white;
+    color: black;
+    transition: background-color 0.5s, color 0.5s;
+}
+.dark-mode {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+   .theme_toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px; /* Aumentamos el tamaño */
+    height: 60px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.theme_toggle img {
+    width: 100%;
+    height: 100%;
+}
+#logo {
+            transition: opacity 0.5s ease-in-out;
+            width: 300px;  /* Ajusta este valor según el tamaño que desees */
+            height: auto;  /* Mantiene la proporción de la imagen */
+        }
+
+/* Animación para la luna */
+@keyframes moonToSun {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    50% { transform: translate(40px, 80px) scale(1.5); opacity: 0.5; }
+    100% { transform: translate(80px, 160px) scale(2); opacity: 0; }
+}
+
+/* Animación para el sol (sin rotación) */
+@keyframes sunFromBottom {
+    0% { transform: translate(-80px, 160px) scale(2); opacity: 0; }
+    50% { transform: translate(-40px, 80px) scale(1.5); opacity: 0.5; }
+    100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+/* Animación inversa para volver a la luna (sin rotación) */
+@keyframes sunToMoon {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    50% { transform: translate(-40px, 80px) scale(1.5); opacity: 0.5; }
+    100% { transform: translate(-80px, 160px) scale(2); opacity: 0; }
+}
+
+/* Animación para que la luna regrese (sin rotación) */
+@keyframes moonFromTop {
+    0% { transform: translate(80px, 160px) scale(2); opacity: 0; }
+    50% { transform: translate(40px, 80px) scale(1.5); opacity: 0.5; }
+    100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+</style>
+<br>
+<br>
+<br>
+<center>
+
+<body>
+<button class="theme_toggle" id="themeButton">
+<img src="../Media/LunarisLunerita.png" id="themeIcon" alt="LunaNegra">
+</button>
+<div class="container">
+ <h1>BIENVENIDO A </h1>
+       <img src="../Media/DelixiuSistem.png" id="logo"class="logo">
+        <br>
+        <br>
+
+        <p>"La mejor experiencia gastronómica para tu paladar"</p>
+        <button class="btn">Explorar Menú</button>
+
+        <button class="test-button">Botón de Prueba</button>
+    </div>
+</center>
+
+    <script>
+const themeButton = document.getElementById("themeButton");
+const logo = document.getElementById("logo");
+const themeIcon = document.getElementById("themeIcon");
+const body = document.body
+
+const moonIcon = "../Media/LunarisLunerita.png"; // Luna
+const sunIcon = "https://cdn-icons-png.flaticon.com/512/869/869869.png"; // Sol
+
+const logoClaro ="../Media/DelixiuSistem.png";
+const logoOscuro ="../Media/DelixiuSistemDark2.png";
+
+let isAnimating = false;
+
+themeButton.addEventListener("click", () => {
+    if (isAnimating) return; // Evita múltiples clics rápidos
+    isAnimating = true;
+
+    if (body.classList.contains("dark-mode")) {
+        // Volver a modo claro (Sol -> Luna)
+        themeIcon.style.animation = "sunToMoon 0.5s forwards ease-in-out";
+        setTimeout(() => {
+            themeIcon.src = moonIcon;
+            themeIcon.style.animation = "moonFromTop 0.5s forwards ease-in-out";
+        }, 500);
+        
+        setTimeout(() => {
+            logo.src = logoClaro; // Cambia el logo cuando la animación termina
+            body.classList.toggle("dark-mode");
+        }, 600);
+    } else {
+        // Cambiar a modo oscuro (Luna -> Sol)
+        themeIcon.style.animation = "moonToSun 0.5s forwards ease-in-out";
+        setTimeout(() => {
+            themeIcon.src = sunIcon;
+            themeIcon.style.animation = "sunFromBottom 0.5s forwards ease-in-out";
+        }, 500);
+        
+        setTimeout(() => {
+            logo.src = logoOscuro; // Cambia el logo cuando la animación termina
+            body.classList.toggle("dark-mode");
+        }, 600);
+    }
+
+    setTimeout(() => {
+        isAnimating = false; // Permite nuevos clics después de la animación
+    }, 1000);
+});
+
+
+    </script>
+</body>
+</html>
